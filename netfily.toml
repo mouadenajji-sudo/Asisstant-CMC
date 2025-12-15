@@ -3,6 +3,6 @@
 
 [[redirects]]
   from = "/webhook"
-  to = "/.netlify/functions/webhook" 
+  to = "/.netlify/functions/whatsapp"
   status = 200
-  force = true
+  methods = ["GET", "POST"]
