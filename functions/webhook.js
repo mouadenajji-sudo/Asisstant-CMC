@@ -3,9 +3,9 @@ const axios = require("axios");
 // --------------------
 // REPLACE THESE WITH YOUR REAL VALUES
 // --------------------
-const VERIFY_TOKEN = "YOUR_VERIFY_TOKEN_HERE";       // Same token as in Meta dashboard
-const WHATSAPP_TOKEN = "YOUR_ACCESS_TOKEN_HERE";    // WhatsApp Cloud API token
-const PHONE_NUMBER_ID = "YOUR_PHONE_NUMBER_ID_HERE"; // Your phone number ID from Meta
+const WHATSAPP_TOKEN = "YOUR_NEW_ACCESS_TOKEN_HERE";  // NEW TOKEN
+const VERIFY_TOKEN = "YOUR_VERIFY_TOKEN_HERE";
+const PHONE_NUMBER_ID = "YOUR_PHONE_NUMBER_ID_HERE";
 
 exports.handler = async function (event) {
   try {
