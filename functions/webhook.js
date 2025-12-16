@@ -1,15 +1,22 @@
 const axios = require("axios");
 
+// --------------------
+// REPLACE THESE WITH YOUR REAL VALUES
+// --------------------
+const VERIFY_TOKEN = "YOUR_VERIFY_TOKEN_HERE";       // Same token as in Meta dashboard
+const WHATSAPP_TOKEN = "YOUR_ACCESS_TOKEN_HERE";    // WhatsApp Cloud API token
+const PHONE_NUMBER_ID = "YOUR_PHONE_NUMBER_ID_HERE"; // Your phone number ID from Meta
+
 exports.handler = async function (event) {
   try {
 
-    // 🔹 Webhook verification
+    // 🔹 Webhook verification (GET request)
     if (event.httpMethod === "GET") {
       const params = event.queryStringParameters;
 
       if (
         params["hub.mode"] === "subscribe" &&
-        params["hub.verify_token"] === process.env.VERIFY_TOKEN
+        params["hub.verify_token"] === VERIFY_TOKEN
       ) {
         return {
           statusCode: 200,
@@ -20,7 +27,7 @@ exports.handler = async function (event) {
       return { statusCode: 403, body: "Forbidden" };
     }
 
-    // 🔹 Incoming messages
+    // 🔹 Incoming messages (POST request)
     if (event.httpMethod === "POST") {
       const body = JSON.parse(event.body);
       const message = body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
@@ -34,8 +41,9 @@ exports.handler = async function (event) {
 
       console.log("Message from:", from, "Text:", text);
 
+      // Send reply
       await axios.post(
-        `https://graph.facebook.com/v18.0/${process.env.PHONE_NUMBER_ID}/messages`,
+        `https://graph.facebook.com/v18.0/${PHONE_NUMBER_ID}/messages`,
         {
           messaging_product: "whatsapp",
           to: from,
@@ -43,7 +51,7 @@ exports.handler = async function (event) {
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+            Authorization: `Bearer ${WHATSAPP_TOKEN}`,
             "Content-Type": "application/json"
           }
         }
